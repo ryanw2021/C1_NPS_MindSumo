@@ -1,0 +1,21 @@
+
+{% extends "layout.html" %}
+<!-- Articles Results Page -->
+
+{% block content %}
+	<h1> Articles Search Results </h1>
+	<!-- Check to see if search returned anything -->
+	{% if articlesData[0] is defined %}
+		<ul>
+		{% for article in articlesData %}
+			<li>
+			<a href="{{ article['url'] }}"> {{ article['title'] }} </a>
+			<br>
+			</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p> No results found, try searching again with different parameters</p>
+	{% endif %}
+
+{% endblock content %}

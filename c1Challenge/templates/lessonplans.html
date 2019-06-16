@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+<!-- Lesson Plan Page -->
+
+{% block content %}
+	<div class="header">
+		<h1>Search for lesson plans and important people</h1>
+		<h2>Enter one or all of the following fields to find relevant information</h2>
+	</div>
+
+	<div class="row">
+
+		<!-- Search Bar(s) -->
+		<div class="column middle" style="background-color:#aaa;"> 
+			<form method = 'POST' action = "{{ url_for('lessonplansResults') }}">
+				{{ form.hidden_tag() }}
+				{{ form.stateAbbreviation.label() }}
+				{{ form.stateAbbreviation() }}
+				<br>
+				{{ form.parkCode.label() }}
+				{{ form.parkCode() }}
+				<br>
+				{{ form.keyword.label() }}
+				{{ form.keyword }}
+				{{ form.submit() }}
+
+			</form>
+		</div>
+
+	</div>
+
+	<div class="footer">
+		<p>National Park Serive Kiosk App- Ryan Cohen</p>
+	</div>
+
+{% endblock content %}

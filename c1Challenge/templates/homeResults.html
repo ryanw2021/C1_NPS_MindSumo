@@ -1,0 +1,27 @@
+
+{% extends "layout.html" %}
+<!-- Home results Page -->
+{% block content %}
+	<div class="header">
+
+		<h1> Park Search Results </h1>
+	</div>
+	<div class="row">
+		<div class='column side'>
+		<!-- Check to see if search returned anything -->
+		{% if parksData[0] is defined %}
+			<ul>
+			{% for park in parksData %}
+				<li>
+				<a href="{{ url_for('individualParkResults', data = park['parkCode']) }}"> {{ park['fullName'] }}</a>
+				<br>
+				</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p> No results found, try searching again with different parameters</p>
+		{% endif %}
+		</div>
+	</div>
+
+{% endblock content %}

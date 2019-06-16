@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+<!-- Individual Park Page (Main source of info for web app) -->
+
+{% block content %}
+	<div class="header">
+		<h1> {{ specificPark["fullName"] }} </h1>
+		<p> Designation Type: {{ specificPark["designation"] }}</p>
+		<br>
+		<p> {{ specificPark["description"] }} </p>
+	</div>
+	<div class="row">
+		<div class="column side" style="background-color:#bbb;">
+			<!-- Checks to see if any Alerts are present -->
+			<p><b>Alerts for Park: </b></p>
+			{% if individualAlerts|length %}
+				{% for alert in individualAlerts %}
+					<p> {{ alert['title'] }}- {{ alert['description'] }}</p>
+
+				{% endfor %}
+			{% else %}
+				<p> No Alerts at this time </p>
+			{% endif %}
+			<br>
+			<!-- Find PLACES for Park -->
+			<p><b> Interesting Places associated with Park </b></p>
+				{% if individualPlaces[0]|length %}
+					<p><u>{{ individualPlaces[0]['title'] }}</u>- {{ individualPlaces[0]['listingdescription'] }}</p>
+					<img src= "{{ individualPlaces[0]['listingimage']['url'] }}" width = '300' height = '200'>
+					<br>
+					<a href="{{ url_for('placesAtParks', data = specificPark['parkCode']) }}">See more places associated with {{ specificPark['fullName'] }}!</a>
+				{% else %}
+					<p> No interesting places assoicated with Park </p>
+				{% endif %}
+			<!-- Find PEOPLE for Park -->
+			<p><b> Famous People Associated With {{ specificPark['fullName']}} </b></p>
+			{% if individualPeople[0]|length %}
+				{% for people in individualPeople %}
+					<p><u>{{ people['title'] }}</u>-{{ people['listingdescription'] }}</p>
+					<img src="{{ people['listingimage']['url'] }}" width = '300' height = '200'>
+				{% endfor %}
+			{% else %}
+				<p>No Famous people associated with {{ specificPark['fullName'] }}</p>
+			{% endif %}
+		</div>
+		<div class="column middle" style="background-color:#aaa;">
+			<!-- Google Map Image from earlier API Call -->
+			<img src="{{ googleImage }}" width = '400' height = '300'>
+
+			<!-- Checks to see if newsrelease is present and has data -->
+			{% if specificNews['title'] is defined and specificNews|length %}
+				<p><b>{{ specificNews['title'] }}:</b> {{ specificNews['abstract'] }} </p>
+
+				<a href="{{ specificNews['url'] }}"> Click here for more information about this Newsrelease</a> 
+				<br>
+				<p> Release Date: {{ specificNews['releasedate'] }}</p>
+
+				<!-- Check to see if newsrelease has an image associated with it -->
+				{% if specificNews['image']['url'] is defined %}
+					<img src="{{ specificNews['image']['url'] }}" width = "500" height = "333">
+				{% endif %}
+			{% else %}
+				<p>No Newsreleases for park</p>
+			{% endif %}
+			<br>
+
+			<!-- Article Infromation -->
+			<p><b>Article Related to {{ specificPark['fullName'] }} </b></p>
+			<!-- Check to see if there is data -->
+			{% if individualArticles|length %}
+				<p><u>{{ individualArticles['title'] }}</u>- {{ individualArticles['listingdescription'] }}</p>
+				<a href = "{{individualArticles['url']}}"><img src = "{{ individualArticles['listingimage']['url'] }}" width = '350' height = '150'></a> 
+				<br>
+				<a href = "{{ url_for('articles') }}">Find more Articles provided by NPS </a>
+			{% else %}
+				<p>No articles associated with this park </p>
+			{% endif %}
+
+			<!-- Events for Park -->
+			<p><b>Events at park:</b></p>
+				<a href="{{ url_for('eventsAtParks', data = specificPark['parkCode']) }}"> Click here to view Events for {{specificPark['fullName']}}!</a>
+
+		</div>
+		<div class = "column side" style="background-color:#ccc;">
+			<!-- Find VISITORCENTERS for park -->
+			<p><b> Visitor Center Information </b></p>
+			{% if individualVisitorcenter[0]|length %}
+				<ul>
+				{% for vc in individualVisitorcenter %}
+					<li>
+						<p><a href="{{ vc['url'] }}">{{ vc['name'] }}-</a> {{ vc['description']}}</p>
+					</li>
+				{% endfor %}
+				</ul>
+			{% else %}
+				<p>No Visitor Center(s) for this designation</p>
+			{% endif %}
+
+
+
+		</div>
+	</div>
+	<div class="footer">
+		<p>National Park Serive Kiosk App- Ryan Cohen</p>
+	</div>
+
+
+
+{% endblock content %}

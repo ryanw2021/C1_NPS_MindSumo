@@ -1,0 +1,22 @@
+
+{% extends "layout.html" %}
+<!-- Campgrounds Results Page -->
+{% block content %}
+	<h1> Campgrounds Search Results </h1>
+	<!-- Check to see if search returned anything -->
+	{% if campgroundsData[0] is defined %}
+		<ol>
+		{% for cg in campgroundsData %}
+			<li>
+
+				<p><b>{{ cg['name'] }}</b>- {{ cg['description']}}</p>
+				<br>
+
+			</li>
+		{% endfor %}
+		</ol>
+	{% else %}
+		<p> No results found, try searching again with different parameters</p>
+	{% endif %}
+
+{% endblock content %}

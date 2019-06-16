@@ -1,0 +1,43 @@
+
+{% extends "layout.html" %}
+<!-- Events at Park Page -->
+
+{% block content %}
+	<h1>Events at Park</h1>
+
+	<!-- Checks to see if there are events for park -->
+	{% if individualEvents|length %}
+		<ol>
+		{% for event in individualEvents %}
+				<li>
+
+					<p><b>Title-</b> {{ event['title'] }}</p>
+					<p><b>Location-</b> {{ event['location'] }} </p>
+					<p><b>Contact Phone Number-</b> {{ event['contacttelephonenumber'] }}</p>
+
+					<p><b>Dates and Times</b> </p>
+					{% if event['isallday'] is sameas true %}
+						<p>Starts on {{event['datestart']}} all day</p>
+						<p>Ends on {{event['dates'][-1]}}</p>
+					{% else %}
+						<p>Starts on: {{ event['datestart'] }} from {{ event['times'][0]['timestart'] }} to {{ event['times'][0]['timeend'] }}</p>
+
+						<p>Ends on: {{ event['dates'][-1] }}</p>
+					{% endif %}
+
+					{% if event['isfree'] is sameas true %}
+						<p><b>Price-</b> FREE</p>
+					{% endif %}
+					<p><b>Description-</b></p> {{ event['description'] }}
+
+					<p><b>_________________________________________________________________________</b></p>
+				</li>
+		{% endfor %}
+		</ol>
+	{% else %}
+		<p>No Events at this time</p>
+	{% endif %}
+
+
+{% endblock content %}
+

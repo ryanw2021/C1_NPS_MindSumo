@@ -1,0 +1,47 @@
+
+{% extends "layout.html" %}
+<!-- Home Page -->
+
+{% block content %}
+	<div class="header">
+		<h1>Welcome to the National Park Service Information Kiosk!</h1>
+		<h2>Enter one or all of the following fields to find information about a Park</h2>
+	</div>
+
+	<div class="row">
+		<div class="column side" style="background-color:#bbb;">
+			<p>Capital One Software Engineering Summit Challenge!</p>
+		</div>
+
+		<!-- Search Forms -->
+		<div class="column middle" style="background-color:#aaa;"> 
+			<form method = 'POST' action = "{{ url_for('parkSearchResults') }}">
+				{{ form.hidden_tag() }}
+				{{ form.stateAbbreviation.label() }}
+				{{ form.stateAbbreviation() }}
+				<br>
+				{{ form.parkCode.label() }}
+				{{ form.parkCode() }}
+				<br>
+				{{ form.keyword.label() }}
+				{{ form.keyword }}
+				<br>
+				<button class="button">{{ form.submit() }}</button>
+
+			</form>
+		</div>
+
+		<!-- Todays Featured Park -->
+		<div class="column side" style="background-color:#ccc;">
+			<p><b>Todays Featured Park!:</b> </p>
+			<br>
+			<p>{{ todaysFeaturedPark['fullName'] }}</p>
+			<br>
+			<a href="{{ url_for('individualParkResults', data = todaysFeaturedPark['parkCode']) }}"> Learn More about this Park!</a>
+		</div>
+	</div>
+
+	<div class="footer">
+		<p>National Park Service Kiosk App- Ryan Cohen</p>
+	</div>
+{% endblock content %}

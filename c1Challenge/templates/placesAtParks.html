@@ -1,0 +1,14 @@
+
+{% extends "layout.html" %}
+<!-- Places at Parks -->
+
+{% block content %}
+	<h1> Places Related to {{ park }} </h1>
+	<p>Click Image to Learn More</p>
+	{% for place in places %}
+		<p><b>{{ place['title'] }}</b>- {{ place['listingdescription'] }}</p>
+		<a href="{{ place['url'] }}"><img src= "{{ place['listingimage']['url']}}" width = '400' height = '250'></a>
+	{% endfor %}
+
+
+{% endblock content %}

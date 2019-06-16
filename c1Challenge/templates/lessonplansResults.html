@@ -1,0 +1,38 @@
+
+{% extends "layout.html" %}
+
+<!-- Lessonplan and People Search Results Page -->
+{% block content %}
+	<div class="header">
+		<h1> Lesson plan and People Search Results </h1>
+	</div>
+	<!-- Check to see if search returned anything -->
+	<div class = "column side" style="background-color:#bbb;">
+		<p><b>Lesson Plans</b></p>
+		{% if lessonplanData[0] is defined %}
+			{% for lessonplan in lessonplanData %}
+		
+				<a href="{{ lessonplan['url'] }}"> {{ lessonplan['title'] }}  </a>
+				<br>
+			{% endfor %}
+		{% else %}
+			<p> No lesson plans found, try searching again with different parameters</p>
+		{% endif %}
+	</div>
+	<div class = "column middle" style="background-color:#ccc;">
+		<p><b>Important People</b></p>
+		{% if peopleData|length %}
+			{% for people in peopleData %}
+				<a href="{{ people['url'] }}"> {{ people['title'] }} </a>
+				<br>
+				<img src="{{ people['listingimage']['url'] }}" width = '300' height = '200'>
+				<br>
+			{% endfor %}
+		{% else %}
+			<p>No famous people meet those criteria, try searching again with different paramters</p>
+		{% endif %}
+
+	</div>
+
+
+{% endblock content %}
